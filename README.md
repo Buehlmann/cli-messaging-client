@@ -1,3 +1,9 @@
 Simple Messaging Client
 =======================
-Aimed to basically test java based message brokers.
+Provides basic testing features of java based message brokers.
+
+# Supported Brokers / Messaging Protocols
+* HornetQ, Core protocol
+
+# Build
+mvn package
