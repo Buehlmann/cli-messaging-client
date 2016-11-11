@@ -7,3 +7,6 @@ Provides basic testing features of java based message brokers.
 
 # Build
 mvn package
+
+# Usage
+java -jar messaging-client.jar

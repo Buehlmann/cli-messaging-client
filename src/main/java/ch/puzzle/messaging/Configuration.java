@@ -7,15 +7,16 @@ import org.kohsuke.args4j.OptionHandlerFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 /**
  * Created by ben on 11.11.16.
  */
 public class Configuration {
-    private final Logger logger = LoggerFactory.getLogger(Configuration.class);
-
     public static final String SEND = "send";
     public static final String RECEIVE = "receive";
-
+    private final Logger logger = LoggerFactory.getLogger(Configuration.class);
     @Option(name = "--method", usage = "send or receive")
     private String method = "send";
 
@@ -38,26 +39,35 @@ public class Configuration {
     private int count = 1;
 
     @Option(name = "--sleep", usage = "millisecond sleep period between count")
-    private int sleep = 0;
+    private long sleep = 0;
 
+    @Option(name = "--xa", usage = "using xa or not")
+    private boolean xa = false;
+
+    private String payload;
 
     public Configuration(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
 
         try {
             parser.parseArgument(args);
+            payload = generatePayload(getSize());
         } catch (CmdLineException e) {
             logger.info(e.getMessage());
             logger.info("java -jar simple-client.jar [options...]");
             parser.printUsage(System.out);
-
-            // print option sample. This is useful some time
             logger.info("  Example: java SampleMain" + parser.printExample(OptionHandlerFilter.ALL));
-
-            return;
         }
     }
 
+    private String generatePayload(int size) {
+        Random r = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            sb.append((char) (97 + r.nextInt(26)));
+        }
+        return sb.toString();
+    }
 
     public String getMethod() {
         return method;
@@ -87,7 +97,15 @@ public class Configuration {
         return size;
     }
 
-    public int getSleep() {
+    public long getSleep() {
         return sleep;
+    }
+
+    public boolean isXa() {
+        return xa;
+    }
+
+    public String getPayload() {
+        return payload;
     }
 }
