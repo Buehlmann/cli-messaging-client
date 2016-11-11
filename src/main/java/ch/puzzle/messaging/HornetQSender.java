@@ -73,21 +73,24 @@ public class HornetQSender {
             logger.error("Error while sleeping...", e);
         } finally {
             try {
-                producer.close();
-                session.close();
+                if (producer != null)
+                    producer.close();
+                if (session != null)
+                    session.close();
             } catch (HornetQException e) {
             }
         }
     }
 
     private TransportConfiguration[] parseBrokerEndpoints() {
-        List<TransportConfiguration> brokers = new ArrayList();
+        List<TransportConfiguration> brokers = new ArrayList<>();
 
         for (String s : configuration.getBrokers().split(BROKER_DELIMITER)) {
             String[] broker = s.split(PORT_DELIMITER);
             Map<String, Object> map = new HashMap<>();
             map.put("host", broker[0]);
             map.put("port", broker[1]);
+            map.put("ssl-enabled", configuration.isSsl());
             brokers.add(new TransportConfiguration(NettyConnectorFactory.class.getName(), map));
         }
         return brokers.toArray(new TransportConfiguration[0]);

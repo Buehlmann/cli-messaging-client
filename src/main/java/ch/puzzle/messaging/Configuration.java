@@ -17,6 +17,7 @@ public class Configuration {
     public static final String SEND = "send";
     public static final String RECEIVE = "receive";
     private final Logger logger = LoggerFactory.getLogger(Configuration.class);
+
     @Option(name = "--method", usage = "send or receive")
     private String method = "send";
 
@@ -41,8 +42,11 @@ public class Configuration {
     @Option(name = "--sleep", usage = "millisecond sleep period between count")
     private long sleep = 0;
 
-    @Option(name = "--xa", usage = "using xa or not")
+    @Option(name = "--xa", usage = "enabling / disabling xa support")
     private boolean xa = false;
+
+    @Option(name = "--ssl", usage = "enabling / disabling ssl encrypted message transfer")
+    private Boolean ssl = false;
 
     private String payload;
 
@@ -107,5 +111,9 @@ public class Configuration {
 
     public String getPayload() {
         return payload;
+    }
+
+    public boolean isSsl() {
+        return ssl;
     }
 }
