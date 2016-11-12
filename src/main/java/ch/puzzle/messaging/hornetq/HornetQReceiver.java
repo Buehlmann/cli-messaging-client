@@ -40,6 +40,7 @@ public class HornetQReceiver {
             for (int i = 0; i < configuration.getCount(); i++) {
                 try {
                     ClientMessage message = consumer.receive();
+                    message.acknowledge();
                     if (i % configuration.getLoginterval() == 0) {
                         logger.info("Received message #{}: {}, body length: {}", i + 1, message, message.getBodySize());
                     }

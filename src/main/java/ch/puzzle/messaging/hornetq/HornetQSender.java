@@ -39,7 +39,7 @@ public class HornetQSender {
                     ClientMessage message = session.createMessage(true);
                     message.getBodyBuffer().writeString(configuration.getPayload());
                     producer.send(message);
-                    session.commit();
+
                     if (i % configuration.getLoginterval() == 0) {
                         logger.info("Sent message #{}: {}", i + 1, message);
                     }

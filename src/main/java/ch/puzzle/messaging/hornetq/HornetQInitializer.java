@@ -36,8 +36,9 @@ class HornetQInitializer {
         ServerLocator serverLocator = createServerLocatorWithoutHA(transportConfigurations);
         try {
             ClientSessionFactory factory = serverLocator.createSessionFactory();
-            return factory.createSession(configuration.getUsername(), configuration
-                    .getPassword(), configuration.isXa(), false, false, false, 1);
+            return factory.createSession(configuration.getUsername(), configuration.getPassword(),
+                    configuration.isXa(), true, true, serverLocator.isPreAcknowledge(),
+                    serverLocator.getAckBatchSize());
 
         } catch (Exception e) {
             logger.error("Could not create SessionFactory: {}", e.getMessage());
