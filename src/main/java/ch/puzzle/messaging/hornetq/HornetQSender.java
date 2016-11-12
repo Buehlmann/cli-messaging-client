@@ -40,7 +40,9 @@ public class HornetQSender {
                     message.getBodyBuffer().writeString(configuration.getPayload());
                     producer.send(message);
                     session.commit();
-                    logger.info("Sent message #{}", i + 1);
+                    if (i % configuration.getLoginterval() == 0) {
+                        logger.info("Sent message #{}: {}", i + 1, message);
+                    }
                 } catch (HornetQException e) {
                     logger.error("Error occured while trying to send message: {}", e.getMessage());
                 }

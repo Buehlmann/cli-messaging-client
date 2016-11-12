@@ -40,13 +40,8 @@ public class HornetQReceiver {
             for (int i = 0; i < configuration.getCount(); i++) {
                 try {
                     ClientMessage message = consumer.receive();
-
-                    if (configuration.isVerbose()) {
+                    if (i % configuration.getLoginterval() == 0) {
                         logger.info("Received message #{}: {}, body length: {}", i + 1, message, message.getBodySize());
-                    } else {
-                        if (i % 100 == 0) {
-                            logger.info("Received message #{}", i + 1);
-                        }
                     }
                 } catch (HornetQException e) {
                     logger.error("Error occured while receiving a message: {}", e.getMessage());
