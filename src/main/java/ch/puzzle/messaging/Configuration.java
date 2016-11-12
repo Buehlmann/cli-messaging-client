@@ -7,16 +7,20 @@ import org.kohsuke.args4j.OptionHandlerFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.security.SecureRandom;
-import java.util.Random;
-
 /**
  * Created by ben on 11.11.16.
  */
 public class Configuration {
     public static final String SEND = "send";
     public static final String RECEIVE = "receive";
+    public static final String HORNETQ = "hornetq";
+
     private final Logger logger = LoggerFactory.getLogger(Configuration.class);
+
+    private PayloadGenerator payloadGenerator;
+
+    @Option(name = "--protocol", usage = "defines the protocol to use. currently only hornetq is supported")
+    private String protocol = "hornetq";
 
     @Option(name = "--method", usage = "send or receive")
     private String method = "send";
@@ -46,16 +50,20 @@ public class Configuration {
     private boolean xa = false;
 
     @Option(name = "--ssl", usage = "enabling / disabling ssl encrypted message transfer")
-    private Boolean ssl = false;
+    private boolean ssl = false;
+
+    @Option(name = "--verbose", usage = "verbose output")
+    private boolean verbose = true;
 
     private String payload;
 
-    public Configuration(String[] args) {
+    Configuration(String[] args) {
+        payloadGenerator = new PayloadGenerator();
         CmdLineParser parser = new CmdLineParser(this);
 
         try {
             parser.parseArgument(args);
-            payload = generatePayload(getSize());
+            payload = payloadGenerator.generatePayload(getSize());
         } catch (CmdLineException e) {
             logger.info(e.getMessage());
             logger.info("java -jar simple-client.jar [options...]");
@@ -64,13 +72,8 @@ public class Configuration {
         }
     }
 
-    private String generatePayload(int size) {
-        Random r = new SecureRandom();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            sb.append((char) (97 + r.nextInt(26)));
-        }
-        return sb.toString();
+    public String getProtocol() {
+        return protocol;
     }
 
     public String getMethod() {
@@ -115,5 +118,9 @@ public class Configuration {
 
     public boolean isSsl() {
         return ssl;
+    }
+
+    public boolean isVerbose() {
+        return verbose;
     }
 }
