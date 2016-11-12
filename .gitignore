@@ -1,3 +1,6 @@
 .idea/
 target/
 cli-messaging-client.iml
+.classpath
+.project
+.settings/
