@@ -40,6 +40,10 @@ public class HornetQReceiver {
             for (int i = 0; i < configuration.getCount(); i++) {
                 try {
                     ClientMessage message = consumer.receive();
+                    if(consumer.isClosed()) {
+                        logger.error("Consumer is closed - exiting. Failover?");
+                        return;
+                    }
                     message.acknowledge();
                     if (i % configuration.getLoginterval() == 0) {
                         logger.info("Received message #{}: {}, body length: {}", i + 1, message, message.getBodySize());

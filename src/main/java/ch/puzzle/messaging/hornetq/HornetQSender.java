@@ -38,6 +38,10 @@ public class HornetQSender {
                 try {
                     ClientMessage message = session.createMessage(true);
                     message.getBodyBuffer().writeString(configuration.getPayload());
+                    if(producer.isClosed()) {
+                        logger.error("Producer is closed - exiting. Failover?");
+                        return;
+                    }
                     producer.send(message);
 
                     if (i % configuration.getLoginterval() == 0) {
