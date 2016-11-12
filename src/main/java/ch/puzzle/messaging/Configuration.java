@@ -52,7 +52,7 @@ public class Configuration {
     @Option(name = "--ssl", usage = "enabling / disabling ssl encrypted message transfer")
     private boolean ssl = false;
 
-    @Option(name = "loginterval", usage = "prints every nth message sent or received")
+    @Option(name = "--loginterval", usage = "prints every nth message sent or received")
     private int loginterval = 1;
 
     private String payload;
