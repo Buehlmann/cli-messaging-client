@@ -1,17 +1,21 @@
 Simple Messaging Client
 =======================
-Provides basic testing features of java based message brokers.
+Provides a simple command line based client to send and receive Messages from a java based broker.
 
-# Supported Brokers / Messaging Protocols
-* HornetQ, core protocol
+# Supported Messaging Protocols
+* HornetQ core protocol
 
-# Build
-mvn package
+# Build the client-jar
+```
+mvn clean package
+```
 
-# Usage
+# Run the client jar
+```
 java -jar messaging-client.jar
+```
 
-# Things to do
+# Planned features
 * Failover Handling
 * Support of Artemis core protocol
 * Integration of the JMS API (@see http://docs.jboss.org/hornetq/2.3.0.Final/docs/user-manual/html/using-jms.html#d0e1361)
