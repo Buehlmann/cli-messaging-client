@@ -1,25 +1,25 @@
-package ch.puzzle.messaging.hornetq;
+package ch.puzzle.messaging.artemis;
 
 import ch.puzzle.messaging.Configuration;
-import org.hornetq.api.core.HornetQException;
-import org.hornetq.api.core.client.ClientMessage;
-import org.hornetq.api.core.client.ClientProducer;
-import org.hornetq.api.core.client.ClientSession;
+import org.apache.activemq.artemis.api.core.ActiveMQException;
+import org.apache.activemq.artemis.api.core.client.ClientMessage;
+import org.apache.activemq.artemis.api.core.client.ClientProducer;
+import org.apache.activemq.artemis.api.core.client.ClientSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Created by ben on 11.11.16.
+ * Created by ben on 18.11.16.
  */
-public class NativeHornetQSender {
-    private final Logger logger = LoggerFactory.getLogger(NativeHornetQSender.class);
+public class NativeArtemisSender {
+    private final Logger logger = LoggerFactory.getLogger(NativeArtemisSender.class);
 
     private Configuration configuration;
-    private HornetQInitializer initializer;
+    private ArtemisInitializer initializer;
 
-    public NativeHornetQSender(Configuration configuration) {
+    public NativeArtemisSender(Configuration configuration) {
         this.configuration = configuration;
-        this.initializer = new HornetQInitializer(configuration);
+        this.initializer = new ArtemisInitializer(configuration);
     }
 
     public void process() {
@@ -47,7 +47,7 @@ public class NativeHornetQSender {
                     if (i % configuration.getLoginterval() == 0) {
                         logger.info("Sent message #{}: {}", i + 1, message);
                     }
-                } catch (HornetQException e) {
+                } catch (ActiveMQException e) {
                     logger.error("Error occured while trying to send message: {}", e.getMessage());
                 }
 
@@ -56,7 +56,7 @@ public class NativeHornetQSender {
                 }
             }
 
-        } catch (HornetQException e) {
+        } catch (ActiveMQException e) {
             logger.error("Error occurred while trying to connect to broker: {}", e.getMessage());
         } catch (InterruptedException e) {
             logger.error("Error while sleeping...", e);
@@ -66,7 +66,7 @@ public class NativeHornetQSender {
                     producer.close();
                 if (session != null)
                     session.close();
-            } catch (HornetQException e) {
+            } catch (ActiveMQException e) {
             }
         }
     }

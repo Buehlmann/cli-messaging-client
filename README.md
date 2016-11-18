@@ -4,6 +4,8 @@ Provides a simple command line based client to send and receive Messages from a 
 ## Supported Messaging Protocols
 - HornetQ core protocol used with native API (--protocol hornetq)
 - HornetQ core protocol used with JMS API (--protocol hornetq-jms)
+- ActiveMQ Artemis core protocol used with native API (--procotol artemis)
+- ActiveMQ Artemis core protocol used with JMS API (--procotol artemis-jms)
 
 ## Build the client
 ```
@@ -37,5 +39,3 @@ java -jar messaging-client.jar
 
 ## Planned features
 * Failover Handling
-* Support of Artemis core protocol
-* Integration of the JMS API (@see http://docs.jboss.org/hornetq/2.3.0.Final/docs/user-manual/html/using-jms.html#d0e1361)

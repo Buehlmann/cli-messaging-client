@@ -1,11 +1,11 @@
-package ch.puzzle.messaging.hornetq;
+package ch.puzzle.messaging.artemis;
 
 import ch.puzzle.messaging.Configuration;
-import org.hornetq.api.core.TransportConfiguration;
-import org.hornetq.api.core.client.ClientSession;
-import org.hornetq.api.core.client.ClientSessionFactory;
-import org.hornetq.api.core.client.ServerLocator;
-import org.hornetq.core.remoting.impl.netty.NettyConnectorFactory;
+import org.apache.activemq.artemis.api.core.TransportConfiguration;
+import org.apache.activemq.artemis.api.core.client.ClientSession;
+import org.apache.activemq.artemis.api.core.client.ClientSessionFactory;
+import org.apache.activemq.artemis.api.core.client.ServerLocator;
+import org.apache.activemq.artemis.core.remoting.impl.netty.NettyConnectorFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,20 +14,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.hornetq.api.core.client.HornetQClient.createServerLocatorWithoutHA;
+import static org.apache.activemq.artemis.api.core.client.ActiveMQClient.createServerLocatorWithoutHA;
 
 /**
- * Created by ben on 12.11.16.
+ * Created by ben on 18.11.16.
  */
-public class HornetQInitializer {
+public class ArtemisInitializer {
     private static final String BROKER_DELIMITER = ",";
     private static final String PORT_DELIMITER = ":";
 
-    private final Logger logger = LoggerFactory.getLogger(HornetQInitializer.class);
+    private final Logger logger = LoggerFactory.getLogger(ArtemisInitializer.class);
 
     private Configuration configuration;
 
-    public HornetQInitializer(Configuration configuration) {
+    public ArtemisInitializer(Configuration configuration) {
         this.configuration = configuration;
     }
 

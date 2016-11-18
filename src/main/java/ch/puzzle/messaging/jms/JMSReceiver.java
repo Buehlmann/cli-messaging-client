@@ -1,7 +1,6 @@
-package ch.puzzle.messaging.hornetq;
+package ch.puzzle.messaging.jms;
 
 import ch.puzzle.messaging.Configuration;
-import org.hornetq.api.jms.HornetQJMSClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,15 +9,15 @@ import javax.jms.*;
 /**
  * Created by ben on 18.11.16.
  */
-public class JMSHornetQReceiver {
-    private final Logger logger = LoggerFactory.getLogger(JMSHornetQReceiver.class);
+public class JMSReceiver {
+    private final Logger logger = LoggerFactory.getLogger(JMSReceiver.class);
 
     private Configuration configuration;
-    private HornetQInitializer initializer;
+    private JMSInitializer initializer;
 
-    public JMSHornetQReceiver(Configuration configuration) {
+    public JMSReceiver(Configuration configuration) {
         this.configuration = configuration;
-        this.initializer = new HornetQInitializer();
+        this.initializer = new JMSInitializer(configuration);
     }
 
     public void process() {
@@ -26,10 +25,10 @@ public class JMSHornetQReceiver {
         MessageConsumer consumer = null;
 
         try {
-            session = initializer.createJMSSession(configuration);
+            session = initializer.createJMSSession();
+            Queue queue = initializer.createJMSQueue();
             logger.info("Successfully connected to message broker {}", session);
 
-            Queue queue = HornetQJMSClient.createQueue(configuration.getDestination());
             consumer = session.createConsumer(queue);
 
             for (int i = 0; i < configuration.getCount(); i++) {

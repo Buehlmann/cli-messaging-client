@@ -1,14 +1,15 @@
 package ch.puzzle.messaging;
 
-import ch.puzzle.messaging.hornetq.JMSHornetQReceiver;
-import ch.puzzle.messaging.hornetq.JMSHornetQSender;
+import ch.puzzle.messaging.artemis.NativeArtemisReceiver;
+import ch.puzzle.messaging.artemis.NativeArtemisSender;
 import ch.puzzle.messaging.hornetq.NativeHornetQReceiver;
 import ch.puzzle.messaging.hornetq.NativeHornetQSender;
+import ch.puzzle.messaging.jms.JMSReceiver;
+import ch.puzzle.messaging.jms.JMSSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static ch.puzzle.messaging.Configuration.HORNETQ_NATIVE;
-import static ch.puzzle.messaging.Configuration.HORNETQ_JMS;
+import static ch.puzzle.messaging.Configuration.*;
 
 /**
  * Created by ben on 11.11.16.
@@ -24,12 +25,17 @@ public class Main {
         Configuration configuration = new Configuration(args);
 
         switch (configuration.getProtocol()) {
+            case HORNETQ_JMS:
+            case ARTEMIS_JMS:
+                processJMS(configuration);
+                break;
+
             case HORNETQ_NATIVE:
                 processHornetQNative(configuration);
                 break;
 
-            case HORNETQ_JMS:
-                processHornetQJMS(configuration);
+            case ARTEMIS_NATIVE:
+                processArtemisNative(configuration);
                 break;
 
             default:
@@ -37,34 +43,42 @@ public class Main {
         }
     }
 
-    private void processHornetQNative(Configuration configuration) {
+    private void processJMS(Configuration configuration) {
         switch (configuration.getMethod()) {
-
             case Configuration.SEND:
-                new NativeHornetQSender(configuration).process();
+                new JMSSender(configuration).process();
                 break;
-
             case Configuration.RECEIVE:
-                new NativeHornetQReceiver(configuration).process();
+                new JMSReceiver(configuration).process();
                 break;
-
             default:
                 logger.info("Unknown method: {}", configuration.getMethod());
                 break;
         }
     }
 
-    private void processHornetQJMS(Configuration configuration) {
+    private void processHornetQNative(Configuration configuration) {
         switch (configuration.getMethod()) {
-
             case Configuration.SEND:
-                new JMSHornetQSender(configuration).process();
+                new NativeHornetQSender(configuration).process();
                 break;
-
             case Configuration.RECEIVE:
-                new JMSHornetQReceiver(configuration).process();
+                new NativeHornetQReceiver(configuration).process();
                 break;
+            default:
+                logger.info("Unknown method: {}", configuration.getMethod());
+                break;
+        }
+    }
 
+    private void processArtemisNative(Configuration configuration) {
+        switch (configuration.getMethod()) {
+            case Configuration.SEND:
+                new NativeArtemisSender(configuration).process();
+                break;
+            case Configuration.RECEIVE:
+                new NativeArtemisReceiver(configuration).process();
+                break;
             default:
                 logger.info("Unknown method: {}", configuration.getMethod());
                 break;
