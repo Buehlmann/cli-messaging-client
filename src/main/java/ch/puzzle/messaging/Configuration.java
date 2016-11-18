@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
 public class Configuration {
     public static final String SEND = "send";
     public static final String RECEIVE = "receive";
-    public static final String HORNETQ = "hornetq";
+    public static final String HORNETQ_NATIVE = "hornetq";
+    public static final String HORNETQ_JMS = "hornetq-jms";
 
     private final Logger logger = LoggerFactory.getLogger(Configuration.class);
 

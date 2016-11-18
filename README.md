@@ -2,7 +2,7 @@
 Provides a simple command line based client to send and receive Messages from a java based message broker.
 
 ## Supported Messaging Protocols
-* HornetQ core protocol
+- HornetQ core protocol
 
 ## Build the client
 ```
@@ -14,7 +14,7 @@ mvn clean package
 java -jar messaging-client.jar
 ```
 
-## Supported parameters of the messaging client
+## Supported parameters
 ```
 > java -jar simple-client.jar [options...]
  --broker VAL      : string with the broker(s) and their messaging ports. e.g.
