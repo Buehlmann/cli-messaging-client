@@ -2,7 +2,8 @@
 Provides a simple command line based client to send and receive Messages from a java based message broker.
 
 ## Supported Messaging Protocols
-- HornetQ core protocol
+- HornetQ core protocol used with native API (--protocol hornetq)
+- HornetQ core protocol used with JMS API (--protocol hornetq-jms)
 
 ## Build the client
 ```
