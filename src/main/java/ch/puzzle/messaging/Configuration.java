@@ -28,10 +28,10 @@ public class Configuration {
     @Option(name = "--method", usage = "send or receive")
     private String method = "send";
 
-    @Option(name = "--broker", usage = "string with the broker(s) and their messaging ports. e.g. broker1.localdomain:5500,broker2.localdomain:5500")
+    @Option(name = "--broker", required = true, usage = "string with the broker(s) and their messaging ports. e.g. broker1.localdomain:5500,broker2.localdomain:5500")
     private String brokers;
 
-    @Option(name = "--destination", usage = "name of the queue or topic")
+    @Option(name = "--destination", required = true, usage = "name of the queue or topic")
     private String destination;
 
     @Option(name = "--user", usage = "username used for authentication")
@@ -40,7 +40,7 @@ public class Configuration {
     @Option(name = "--password", usage = "password used for authentication")
     private String password;
 
-    @Option(name = "--size", usage = "size in bytes of the message payload")
+    @Option(name = "--size", usage = "number of characters of the message payload")
     private int size = 1024;
 
     @Option(name = "--count", usage = "repeat <n> times")
@@ -63,16 +63,24 @@ public class Configuration {
     Configuration(String[] args) {
         payloadGenerator = new PayloadGenerator();
         CmdLineParser parser = new CmdLineParser(this);
-
+        if(args == null || args.length < 1) {
+            printUsage(parser);
+            System.exit(0);
+        }
         try {
             parser.parseArgument(args);
             payload = payloadGenerator.generatePayload(getSize());
         } catch (CmdLineException e) {
             logger.info(e.getMessage());
-            logger.info("java -jar simple-client.jar [options...]");
-            parser.printUsage(System.out);
-            logger.info("  Example: java SampleMain" + parser.printExample(OptionHandlerFilter.ALL));
+            printUsage(parser);
+            System.exit(0);
         }
+    }
+
+    private void printUsage(CmdLineParser parser) {
+        logger.info("java -jar messaging-client.jar [options...]");
+        parser.printUsage(System.out);
+        logger.info("Example: java -jar messaging-client.jar" + parser.printExample(OptionHandlerFilter.ALL));
     }
 
     public String getProtocol() {
