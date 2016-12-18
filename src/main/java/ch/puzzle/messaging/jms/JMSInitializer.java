@@ -49,12 +49,18 @@ public class JMSInitializer {
             case HORNETQ_JMS:
                 TransportConfiguration[] hqTransports = new HornetQInitializer(configuration).parseBrokerEndpoints();
                 HornetQConnectionFactory hqCF = org.hornetq.api.jms.HornetQJMSClient.createConnectionFactoryWithHA(configuration.isXa() ? org.hornetq.api.jms.JMSFactoryType.XA_CF : org.hornetq.api.jms.JMSFactoryType.CF, hqTransports);
-                return hqCF.createConnection(configuration.getUsername(), configuration.getPassword());
+                hqCF.setReconnectAttempts(-1);
+                return configuration.isXa() ?
+                        hqCF.createXAConnection(configuration.getUsername(), configuration.getPassword()) :
+                        hqCF.createConnection(configuration.getUsername(), configuration.getPassword());
 
             case ARTEMIS_JMS:
                 org.apache.activemq.artemis.api.core.TransportConfiguration[] artemisTransports = new ArtemisInitializer(configuration).parseBrokerEndpoints();
                 ActiveMQConnectionFactory artemisCF = ActiveMQJMSClient.createConnectionFactoryWithHA(configuration.isXa() ? org.apache.activemq.artemis.api.jms.JMSFactoryType.XA_CF : org.apache.activemq.artemis.api.jms.JMSFactoryType.CF, artemisTransports);
-                return artemisCF.createConnection(configuration.getUsername(), configuration.getPassword());
+                artemisCF.setReconnectAttempts(-1);
+                return configuration.isXa() ?
+                        artemisCF.createXAConnection(configuration.getUsername(), configuration.getPassword()) :
+                        artemisCF.createConnection(configuration.getUsername(), configuration.getPassword());
 
             default:
                 logger.error("Not supported protocol: {}", configuration.getProtocol());
