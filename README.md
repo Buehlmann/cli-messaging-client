@@ -17,6 +17,12 @@ mvn clean package
 java -jar messaging-client.jar
 ```
 
+## Example with parameters
+Sends 50 messages in 10ms interval to the message queue "jms.queue.MyQueue":
+```
+java -jar messaging-client.jar --broker localhost:5445,localhost:5545 --destination jms.queue.MyQueue --method send --password letmein --user jms-user --protocol artemis --count 50 --size 2048 --xa --sleep 10
+```
+
 ## Supported parameters
 ```
 > java -jar simple-client.jar [options...]
