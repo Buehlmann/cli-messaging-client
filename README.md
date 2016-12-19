@@ -38,4 +38,5 @@ java -jar messaging-client.jar
 ```
 
 ## Planned features
+* Close connection gracefully to message broker on ctrl+c
 * Failover Handling
