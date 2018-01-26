@@ -33,9 +33,9 @@ public class HornetQInitializer {
 
     ClientSession createNativeSession() {
         TransportConfiguration[] transportConfigurations = parseBrokerEndpoints();
-        logger.info("Connecting to the following broker(s):");
+        logger.debug("Connecting to the following broker(s):");
         for (TransportConfiguration transportConfiguration : transportConfigurations) {
-            logger.info(transportConfiguration.toString());
+            logger.debug(transportConfiguration.toString());
         }
 
         ServerLocator serverLocator = createServerLocatorWithoutHA(transportConfigurations);
@@ -62,7 +62,7 @@ public class HornetQInitializer {
             map.put("ssl-enabled", configuration.isSsl());
             TransportConfiguration transport = new TransportConfiguration(NettyConnectorFactory.class.getName(), map);
             brokers.add(transport);
-            logger.info(transport.toString());
+            logger.debug(transport.toString());
         }
         return brokers.toArray(new TransportConfiguration[0]);
     }
