@@ -37,6 +37,7 @@ java -jar messaging-client.jar [options...]
  --print-message-body  : print text body of message to stdout (default: false)
  --protocol VAL        : defines the protocol to use. currently only hornetq is
                          supported (default: hornetq)
+ --receive-timeout N   : receive timeout in ms
  --size N              : number of characters of the message payload (default:
                          1024)
  --sleep N             : millisecond sleep period between count (default: 0)

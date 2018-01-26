@@ -64,6 +64,9 @@ public class Configuration {
     @Option(name = "--print-message-body", usage = "print text body of message to stdout")
     private boolean printMessageBody = false;
 
+    @Option(name = "--receive-timeout", usage = "receive timeout in ms")
+    private Long receiveTimeout;
+    
     private String payload;
 
     Configuration(String[] args) {
@@ -143,5 +146,9 @@ public class Configuration {
     
     public boolean isPrintMessageBody() {
         return printMessageBody;
+    }
+    
+    public Long getReceiveTimeout() {
+        return receiveTimeout;
     }
 }

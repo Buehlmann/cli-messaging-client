@@ -1,6 +1,8 @@
 package ch.puzzle.messaging.jms;
 
 import ch.puzzle.messaging.Configuration;
+
+import org.hornetq.api.core.client.ClientMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +35,16 @@ public class JMSReceiver {
 
             for (int i = 0; i < configuration.getCount(); i++) {
                 try {
-                    TextMessage message = (TextMessage) consumer.receive();
-
+                    TextMessage message;
+                    if(configuration.getReceiveTimeout() == null) {
+                        message = (TextMessage) consumer.receive();
+                    } else {
+                        message = (TextMessage) consumer.receive(configuration.getReceiveTimeout());
+                    }
+                    if(message == null) {
+                        logger.error("Did not receive any expected message during configured timeout of {} ms", configuration.getReceiveTimeout());                        
+                        System.exit(1);
+                    }
                     if (i % configuration.getLoginterval() == 0) {
                         logger.info("Received message #{}: {}", i + 1, message);
                     }

@@ -39,7 +39,16 @@ public class NativeArtemisReceiver {
 
             for (int i = 0; i < configuration.getCount(); i++) {
                 try {
-                    ClientMessage message = consumer.receive();
+                    ClientMessage message;
+                    if(configuration.getReceiveTimeout() == null) {
+                        message = consumer.receive();
+                    } else {
+                        message = consumer.receive(configuration.getReceiveTimeout());
+                    }
+                    if(message == null) {
+                        logger.error("Did not receive any expected message during configured timeout of {} ms", configuration.getReceiveTimeout());                        
+                        System.exit(1);
+                    }
                     if (consumer.isClosed()) {
                         logger.error("Consumer is closed - exiting. Failover?");
                         System.exit(1);
