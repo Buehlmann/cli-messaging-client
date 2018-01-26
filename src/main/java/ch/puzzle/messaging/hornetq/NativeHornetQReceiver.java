@@ -34,8 +34,8 @@ public class NativeHornetQReceiver {
             }
             session.start();
             consumer = session.createConsumer(configuration.getDestination());
-            logger.info("Successfully connected to message broker {}", session);
-            logger.info("Waiting for messages...");
+            logger.debug("Successfully connected to message broker {}", session);
+            logger.debug("Waiting for messages...");
 
             for (int i = 0; i < configuration.getCount(); i++) {
                 try {
