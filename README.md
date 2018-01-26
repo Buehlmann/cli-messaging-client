@@ -25,22 +25,25 @@ java -jar messaging-client.jar --broker localhost:5445,localhost:5545 --destinat
 
 ## Supported parameters
 ```
-> java -jar simple-client.jar [options...]
- --broker VAL      : string with the broker(s) and their messaging ports. e.g.
-                     brokercx1.localdomain:5500,broker2.localdomain:5500
- --count N         : repeat <n> times (default: 1)
- --destination VAL : name of the queue or topic
- --loginterval N   : prints every nth message sent or received (default: 1)
- --method VAL      : send or receive (default: send)
- --password VAL    : password used for authentication
- --protocol VAL    : defines the protocol to use. currently only hornetq is
-                     supported (default: hornetq)
- --size N          : size in bytes of the message payload (default: 1024)
- --sleep N         : millisecond sleep period between count (default: 0)
- --ssl             : enabling / disabling ssl encrypted message transfer
-                     (default: false)
- --user VAL        : username used for authentication
- --xa              : enabling / disabling xa support (default: false)
+java -jar messaging-client.jar [options...]
+ --broker VAL          : string with the broker(s) and their messaging ports.
+                         e.g. broker1.localdomain:5500,broker2.localdomain:5500
+ --count N             : repeat <n> times (default: 1)
+ --destination VAL     : name of the queue or topic
+ --loginterval N       : prints every nth message sent or received (default: 1)
+ --message-content VAL : string with the message content
+ --method VAL          : send or receive (default: send)
+ --password VAL        : password used for authentication
+ --print-message-body  : print text body of message to stdout (default: false)
+ --protocol VAL        : defines the protocol to use. currently only hornetq is
+                         supported (default: hornetq)
+ --size N              : number of characters of the message payload (default:
+                         1024)
+ --sleep N             : millisecond sleep period between count (default: 0)
+ --ssl                 : enabling / disabling ssl encrypted message transfer
+                         (default: false)
+ --user VAL            : username used for authentication
+ --xa                  : enabling / disabling xa support (default: false)
 ```
 
 ## Planned features
