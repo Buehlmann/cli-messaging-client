@@ -46,7 +46,11 @@ public class NativeArtemisReceiver {
                     }
                     message.acknowledge();
                     if (i % configuration.getLoginterval() == 0) {
-                        logger.info("Received message #{}: {}, body length: {}", i + 1, message, message.getBodySize());
+                        if (!configuration.isPrintMessageBody()) {
+                            logger.info("Received message #{}: {}, body size in bytes: {}", i + 1, message, message.getBodySize());                            
+                        } else {                            
+                            logger.info("Received message #{}: {}, body size in bytes: {}, message body: \"{}\"", i + 1, message, message.getBodySize(), message.getBodyBuffer().readString());
+                        }
                     }
                 } catch (ActiveMQException e) {
                     logger.error("Error occured while receiving a message: {}", e.getMessage());

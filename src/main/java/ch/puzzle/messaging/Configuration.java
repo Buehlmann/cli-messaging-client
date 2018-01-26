@@ -58,6 +58,12 @@ public class Configuration {
     @Option(name = "--loginterval", usage = "prints every nth message sent or received")
     private int loginterval = 1;
 
+    @Option(name = "--message-content", usage = "string with the message content")
+    private String messageContent;
+
+    @Option(name = "--print-message-body", usage = "print text body of message to stdout")
+    private boolean printMessageBody = false;
+
     private String payload;
 
     Configuration(String[] args) {
@@ -69,7 +75,7 @@ public class Configuration {
         }
         try {
             parser.parseArgument(args);
-            payload = payloadGenerator.generatePayload(getSize());
+            payload = messageContent != null ? messageContent : payloadGenerator.generatePayload(getSize());
         } catch (CmdLineException e) {
             logger.info(e.getMessage());
             printUsage(parser);
@@ -133,5 +139,9 @@ public class Configuration {
 
     public int getLoginterval() {
         return loginterval;
+    }
+    
+    public boolean isPrintMessageBody() {
+        return printMessageBody;
     }
 }
