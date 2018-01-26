@@ -64,6 +64,7 @@ public class JMSInitializer {
 
             default:
                 logger.error("Not supported protocol: {}", configuration.getProtocol());
+                System.exit(1);
                 return null;
         }
     }
@@ -78,6 +79,7 @@ public class JMSInitializer {
 
             default:
                 logger.error("Not supported protocol: {}", configuration.getProtocol());
+                System.exit(1);
                 return null;
         }
     }

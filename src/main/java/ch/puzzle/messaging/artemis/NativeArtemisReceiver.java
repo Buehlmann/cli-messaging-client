@@ -30,7 +30,7 @@ public class NativeArtemisReceiver {
             session = initializer.createNativeSession();
             if (session == null) {
                 logger.error("Could not create client session");
-                return;
+                System.exit(1);
             }
             session.start();
             consumer = session.createConsumer(configuration.getDestination());
@@ -42,7 +42,7 @@ public class NativeArtemisReceiver {
                     ClientMessage message = consumer.receive();
                     if (consumer.isClosed()) {
                         logger.error("Consumer is closed - exiting. Failover?");
-                        return;
+                        System.exit(1);
                     }
                     message.acknowledge();
                     if (i % configuration.getLoginterval() == 0) {
@@ -54,6 +54,7 @@ public class NativeArtemisReceiver {
                     }
                 } catch (ActiveMQException e) {
                     logger.error("Error occured while receiving a message: {}", e.getMessage());
+                    System.exit(1);                    
                 }
 
                 if (configuration.getSleep() > 0) {
@@ -63,8 +64,10 @@ public class NativeArtemisReceiver {
 
         } catch (ActiveMQException e) {
             logger.error("Error occurred while trying to connect to broker: {}", e.getMessage());
+            System.exit(1);            
         } catch (InterruptedException e) {
             logger.error("Error while sleeping...", e);
+            System.exit(1);            
         } finally {
             try {
                 if (consumer != null)

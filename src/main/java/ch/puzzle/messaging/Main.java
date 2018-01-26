@@ -40,6 +40,7 @@ public class Main {
 
             default:
                 logger.error("Protocol {} not supported", configuration.getProtocol());
+                System.exit(1);                
         }
     }
 
@@ -53,7 +54,7 @@ public class Main {
                 break;
             default:
                 logger.info("Unknown method: {}", configuration.getMethod());
-                break;
+                System.exit(1);
         }
     }
 
@@ -67,7 +68,7 @@ public class Main {
                 break;
             default:
                 logger.info("Unknown method: {}", configuration.getMethod());
-                break;
+                System.exit(1);
         }
     }
 
@@ -81,7 +82,7 @@ public class Main {
                 break;
             default:
                 logger.info("Unknown method: {}", configuration.getMethod());
-                break;
+                System.exit(1);
         }
     }
 }

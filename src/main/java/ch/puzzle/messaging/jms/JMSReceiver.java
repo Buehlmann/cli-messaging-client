@@ -40,16 +40,19 @@ public class JMSReceiver {
                     }
                 } catch (JMSException e) {
                     logger.error("Error occured while trying to receive message: {}", e.getMessage());
+                    System.exit(1);                    
                 }
                 if (configuration.getSleep() > 0) {
                     try {
                         Thread.currentThread().sleep(configuration.getSleep());
                     } catch (InterruptedException e) {
+                        System.exit(1);                        
                     }
                 }
             }
         } catch (JMSException e) {
             logger.error("Error occurred while trying to creating producer: {}", e.getMessage());
+            System.exit(1);            
         } finally {
             try {
                 if (consumer != null)

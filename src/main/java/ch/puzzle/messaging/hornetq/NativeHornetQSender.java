@@ -30,7 +30,7 @@ public class NativeHornetQSender {
             session = initializer.createNativeSession();
             if (session == null) {
                 logger.error("Could not create client session");
-                return;
+                System.exit(1);
             }
             producer = session.createProducer(configuration.getDestination());
 
@@ -40,7 +40,7 @@ public class NativeHornetQSender {
                     message.getBodyBuffer().writeString(configuration.getPayload());
                     if (producer.isClosed()) {
                         logger.error("Producer is closed - exiting. Failover?");
-                        return;
+                        System.exit(1);
                     }
                     producer.send(message);
 
@@ -49,6 +49,7 @@ public class NativeHornetQSender {
                     }
                 } catch (HornetQException e) {
                     logger.error("Error occured while trying to send message: {}", e.getMessage());
+                    System.exit(1);                    
                 }
 
                 if (configuration.getSleep() > 0) {
@@ -58,8 +59,10 @@ public class NativeHornetQSender {
 
         } catch (HornetQException e) {
             logger.error("Error occurred while trying to connect to broker: {}", e.getMessage());
+            System.exit(1);            
         } catch (InterruptedException e) {
             logger.error("Error while sleeping...", e);
+            System.exit(1);            
         } finally {
             try {
                 if (producer != null)

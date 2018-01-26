@@ -47,6 +47,7 @@ public class HornetQInitializer {
 
         } catch (Exception e) {
             logger.error("Could not create SessionFactory: {}", e.getMessage());
+            System.exit(1);
             return null;
         }
     }
