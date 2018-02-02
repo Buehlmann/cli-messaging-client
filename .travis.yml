@@ -1,3 +1,10 @@
 language: java
 jdk:
-  - oraclejdk9
+- oraclejdk9
+deploy:
+  provider: releases
+  api_key:
+    secure: DX5Ee/lj+ROKMx0yVjW5XJwSfxi0SpWxnOqP8/CvBbLys2haT311p/FRW7yUxv5FmrZPpVo+HQjta9Dl1MoGJ5N1//SMNUvwsbEPQHH3bCk6iAO0rgEvSKGH50DEeoq7Q7yRXo7LUTNTIM3iM1lXVny6jWYGIup7gzD7LXksLBu87GywqbVhUrNQzzhfKscFk4G/wIp/ucA/QzEQbj7qwNw7HYCBhn9JdGv5ihwC75BXeH4gqlmX8mA4cGLwHBFTLYAbm5VKS4aeaU/v1fAcCAjTyPyYcqFXSKT28FdH972P379eD0Go/65ZrdsNlmCoTCY8GTPmd1emLagTEHu9lzpqtYmSDCWswBTIsS2atNowGSJd3xhJxBnQvs65QZqvGisiZONnFm1BwE0+4mU93y/1BgD6HMiiXiD4ptHR5pNZ6tEZezIYA7o298q5FNp7pDDqEP0Xe8KVUpRpgztnE+z1xm/f7VkZCYBMqzgsneru2OXn/wG2l77ShRGz73adwmKcESdPwtjlg0l5mRMgEdWIo1NVX+lCKiHQSoEsKkXmp1b7scFIZqA5HZV7wMRN+gJhtC1EeneQLVWI1SUl3yJVk3x+h5O4KfWDgcblfrGEARSwa8JGWinwoRSMxhyIk3uk7BVeZDo0DXlWKI+u83DY4XvPGZzvUlM51txQE5k=
+  file: target/messaging-client.jar
+  on:
+    repo: buehlmann/cli-messaging-client
