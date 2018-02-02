@@ -1,6 +1,6 @@
 CLI based Messaging Client
 ==========================
-[![Build Status](https://travis-ci.org/buehlmann/cli-messaging-client.svg?branch=master)](https://travis-ci.org/buehlmann/cli-messaging-client)
+[![Build Status](https://travis-ci.org/buehlmann/cli-messaging-client.svg?branch=master)](https://travis-ci.org/buehlmann/cli-messaging-client)  
 Provides a simple command line based client to send and receive Messages from a java based message broker.
 
 ## Supported Messaging Protocols
