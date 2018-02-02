@@ -8,3 +8,4 @@ deploy:
   file: target/messaging-client.jar
   on:
     repo: buehlmann/cli-messaging-client
+  skip_cleanup: true
